@@ -18,13 +18,14 @@ app.get('study/health', (c) => {
   return c.json({ status: 'healthy', code: 200 })
 })
 
-app.get('study/extract/:userId/:locationName/:courseId/:filename', async (c) => {
+app.get('study/extract/:userId/:semester/:locationName/:courseId/:filename', async (c) => {
   try {
     const userId = c.req.param('userId')
+    const semester = c.req.param('semester')
     const locationName = c.req.param('locationName')
     const courseId = c.req.param('courseId')
     const filename = c.req.param('filename')
-    const id = `${userId}/${locationName}/${courseId}/${filename}`
+    const id = `${userId}/${semester}/${locationName}/${courseId}/${filename}`
     console.log("Worker getting executed !!")
     const bucket: R2Bucket = c.env.MY_BUCKET
     const object = await bucket.get(id)
